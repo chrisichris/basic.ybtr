@@ -1,0 +1,5 @@
+module helloTest;
+
+println helloTest;
+
+1;
