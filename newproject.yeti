@@ -1,0 +1,3 @@
+{properties} = load ybuilder.core.projecttemplate;
+println properties;
+
