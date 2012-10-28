@@ -1,3 +1,5 @@
-{properties} = load ybuilder.core.projecttemplate;
+mod = load ybuilder.core.build;
+
+properties = mod.readProperties (file "ybtr.properties");
 println properties;
 
