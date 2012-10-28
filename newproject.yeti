@@ -1,5 +1,0 @@
-mod = load ybuilder.core.build;
-
-properties = mod.readProperties (mod.file "ybtr.properties");
-println properties;
-
