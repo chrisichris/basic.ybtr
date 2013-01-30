@@ -6,14 +6,12 @@
 //
 // This file is a normal yeti program, which gets executed through ybuilder.jar.
 //
-// It does four things:
-// 1. load module(s) with predefined build prozesses (tasks, pathes etc)
-// 2. customize mandatory settings (ie project name)
-// 3. declare dependencies on other jars etc (optionally)
-// 4. add your own build tasks
+// It does following things:
+// 1. configures basic project settings
+// 2. configures dependencies
+// 3. registers targets in the config
+// 4. runs the targets
 //
-// Finally the commands passed through ybuilder.jar get executed by invoking 
-// 'load ybuilder.core.run' module on the last line.
 
 ////////////////////////////////////////////////////////////////////////////////
 // Build dependencies
@@ -30,19 +28,19 @@
 ////////////////////////////////////////////////////////////////////////////////
 //Load build modules with general setups
 
-//the base module sets up all the targets, pathes etc for a basic yeti build
+load ybuilder.core.build;
 load ybuilder.core.base;
 
 
 ////////////////////////////////////////////////////////////////////////////////
-//General setup
+//Basic project settings
 
-
-project.name := "@name@";
-project.groupId :="@group_id@";
-project.artifactId := "@name@";
-project.version := "@version@";
-project.description := "@description@";
+config = baseConfig ();
+config.name := "@name@";
+config.groupId :="@group_id@";
+config.artifactId := "@name@";
+config.version := "@version@";
+config.description := "@description@";
 
 ////////////////////////////////////////////////////////////////////////////////
 //---Library Dependencies ---			
@@ -54,13 +52,19 @@ project.description := "@description@";
 // You must have the version of yeti which you want to use on your projects path
 // (Instead of declaring the dependency you can also copy yeti.jar 
 // to the ./lib directory and remove the following line)
-dependency "org.yeti" "yeti" "0.9.6+-SNAPSHOT" [];
+config = createBaseConfig config [
+    dependency "org.yeti" "yeti" "0.9.7+-SNAPSHOT" [],
 
-// examples for other dependencies
-// dependency "org.apache.commons" "commons-lang3" "3.0.1" [];
-// dependency "junit" "junit" "3.8.2" [TestScope()];
-// dependency "javax.servlet" "servlet-api" "2.4" [ProvidedScope()];
+    // examples for other dependencies
+    // dependency "org.apache.commons" "commons-lang3" "3.0.1" [],
+    // dependency "junit" "junit" "3.8.2" [TestScope()],
+    // dependency "javax.servlet" "servlet-api" "2.4" [ProvidedScope()],
+];
 
+//////////////////////////////////////////////////////////////////////
+//register targets
+
+config = config with registerBaseTargets config;
 
 ////////////////////////////////////////////////////////////////////////////////
 //---custom targets --
@@ -70,8 +74,8 @@ dependency "org.yeti" "yeti" "0.9.6+-SNAPSHOT" [];
 //
 // load ybuilder.core.build;
 // myInit = 
-//    target "myInit" 
-//           [InLivecycle livecycleTargets.initialize, 
+//    target confing "custom" "myInit" 
+//           [DependencyOf config.livecylceTargets.initialize, 
 //              Depends baseTargets.initDirs] 
 //           do project:
 //                antTask "delete" ["dir":"target/foo"] [] project;
@@ -82,10 +86,7 @@ dependency "org.yeti" "yeti" "0.9.6+-SNAPSHOT" [];
 //                          project;
 //           done;
 
+////////////////////////////////////////
+//run the config
 
-////////////////////////////////////////////////////////////////////////////////
-//---End--
-
-// leave the final load! 
-// runs the targets entered at the command line
-load ybuilder.core.run;
+run config;
