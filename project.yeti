@@ -1,16 +1,23 @@
 ////////////////////////////////////////////////////////////////////////////////
 // The ybuilder project build file
 //
-// Ybuilder is a simple build tool for yeti. Together with the ybuilder.jar this file
-// specifies the build-process of ybuilder.
+// Ybuilder is a simple build tool for yeti. Together with the ybuilder.jar 
+// this file specifies the build-process of ybuilder.
 //
-// This file is a normal yeti program, which gets executed through ybuilder.jar.
+// This file is a normal yeti program, which gets executed through 
+// ybuilder.jar.
 //
-// It does following things:
+// Yout have to customize:
+// 1. the groupId artifactId and version below to use that file for
+// your project
+//
+// This file does following things:
 // 1. configures basic project settings
 // 2. configures dependencies
 // 3. registers targets in the config
-// 4. runs the targets
+// 4. runs the target specified at the cmd-line
+//
+// 
 //
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -34,13 +41,10 @@ load ybuilder.core.base;
 
 ////////////////////////////////////////////////////////////////////////////////
 //Basic project settings
+//
+//FIXME: update the groupId artifactId version
 
-config = baseConfig ();
-config.name := "@name@";
-config.groupId :="@group_id@";
-config.artifactId := "@name@";
-config.version := "@version@";
-config.description := "@description@";
+config = baseConfig "groupdId" "artifactId" "version";
 
 ////////////////////////////////////////////////////////////////////////////////
 //---Library Dependencies ---			
@@ -53,7 +57,7 @@ config.description := "@description@";
 // (Instead of declaring the dependency you can also copy yeti.jar 
 // to the ./lib directory and remove the following line)
 config = createBaseConfig config [
-    dependency "org.yeti" "yeti" "0.9.7+-SNAPSHOT" [],
+    dependency "org.yeti" "yeti" "0.9.8-SNAPSHOT" [],
 
     // examples for other dependencies
     // dependency "org.apache.commons" "commons-lang3" "3.0.1" [],
