@@ -20,7 +20,7 @@
 // 
 //
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // Build dependencies
 //
 // If your build depends on apis not provided with ybuilder.jar you can load
@@ -30,31 +30,32 @@
 //@buildDependency "org.apache.ant" "ant-junit" "1.8.1" 
 //    [exclusion "junit" "junit", exclusion "org.apache.ant" "ant"];
 //
-// note that the dependency delcaration including the exclusion all must be on one line
+// note that the dependency delcaration including the exclusion all must be 
+// on one line
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //Load build modules with general setups
 
 load ybuilder.core.build;
 load ybuilder.core.base;
 
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //Basic project settings
 //
 //FIXME: update the groupId artifactId version
 
 config = baseConfig "groupdId" "artifactId" "version";
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //---Library Dependencies ---			
 // add your library dependencies in maven style
 // use: dependency "groupId" "artifactId" "version" [options]
 //      options = ProvidedScope(), TestScope(), SystemScope()
 //      default scope is compile scope
 
-// You must have the version of yeti which you want to use on your projects path
-// (Instead of declaring the dependency you can also copy yeti.jar 
+// You must have the version of yeti which you want to use on your projects 
+// path (Instead of declaring the dependency you can also copy yeti.jar 
 // to the ./lib directory and remove the following line)
 config = createBaseConfig config [
     dependency "org.yeti" "yeti" "0.9.8-SNAPSHOT" [],
@@ -70,7 +71,7 @@ config = createBaseConfig config [
 
 config = config with registerBaseTargets config;
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 //---custom targets --
 
 // add custom targets here
